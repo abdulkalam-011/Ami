@@ -1,18 +1,23 @@
-import { useContext } from "react";
 import "./App.css";
-import Header from "./components/Header";
-import SideBar from "./components/SideBar";
-import ThemeContext from "./context/ThemeProvider";
+
+import { useState } from "react";
+import Dashboard from "./pages/Dashboard";
+import AuthPage from "./pages/AuthPage";
 
 const App = () => {
-  const { theme } = useContext(ThemeContext);
+  const [isAuthenticated, setisAuthenticated] = useState(false);
+
+  const handleAuthSuccess = () => {
+    setisAuthenticated(true);
+  };
 
   return (
     <>
-      <div className={`${theme} min-h-screen w-full flex`}>
-        <SideBar />
-        <div>App</div>
-      </div>
+      {isAuthenticated ? (
+        <Dashboard />
+      ) : (
+        <AuthPage onAuthSuccess={handleAuthSuccess} />
+      )}
     </>
   );
 };
